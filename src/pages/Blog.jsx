@@ -550,6 +550,7 @@ export default function Blog() {
                                             <img
                                                 src={getImagem(post.slug)}
                                                 alt={post.titulo}
+                                                loading="lazy"
                                                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
@@ -652,6 +653,7 @@ export default function Blog() {
                                                             <img
                                                                 src={getImagem(post.slug)}
                                                                 alt={post.titulo}
+                                                                loading="lazy"
                                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                                             />
                                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
