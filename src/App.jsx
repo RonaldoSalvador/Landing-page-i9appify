@@ -15,8 +15,7 @@ import Dashboard from './pages/crm/Dashboard'
 import Leads from './pages/crm/Leads'
 import Visitors from './pages/crm/Visitors'
 import Settings from './pages/crm/Settings'
-import Calendar from './pages/crm/Calendar'
-import Templates from './pages/crm/Templates'
+import Pipeline from './pages/crm/Pipeline'
 
 export default function App() {
   return (
@@ -42,10 +41,9 @@ export default function App() {
             }
           >
             <Route index element={<Dashboard />} />
+            <Route path="pipeline" element={<Pipeline />} />
             <Route path="leads" element={<Leads />} />
             <Route path="visitors" element={<Visitors />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="templates" element={<Templates />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
@@ -54,4 +52,3 @@ export default function App() {
     </AuthProvider>
   )
 }
-
