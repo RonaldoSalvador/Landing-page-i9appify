@@ -26,6 +26,129 @@ const columns = [
     { id: 'perdido', title: 'Perdidos', color: 'bg-red-500', textColor: 'text-red-500', emoji: '❌' }
 ]
 
+// Quick Actions Component
+const QuickActions = ({ lead, setSelectedLead }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.8, y: 10 }}
+        className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full z-20"
+        onClick={e => e.stopPropagation()}
+    >
+        <div className="flex items-center gap-1 bg-white dark:bg-[#21262d] border border-gray-200 dark:border-[#30363d] rounded-full p-1 shadow-xl">
+            {lead.whatsapp && (
+                <motion.a
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`https://wa.me/55${lead.whatsapp.replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors"
+                    title="WhatsApp"
+                >
+                    <MessageCircle size={14} />
+                </motion.a>
+            )}
+            {lead.email && (
+                <motion.a
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`mailto:${lead.email}`}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+                    title="Email"
+                >
+                    <Mail size={14} />
+                </motion.a>
+            )}
+            <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedLead(lead)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-500 hover:bg-gray-600 text-white transition-colors"
+                title="Ver detalhes"
+            >
+                <ExternalLink size={14} />
+            </motion.button>
+        </div>
+    </motion.div>
+)
+
+const LeadCard = ({ lead, draggedLead, hoveredCard, setHoveredCard, handleDragStart, setSelectedLead }) => {
+    const isDragging = draggedLead?.id === lead.id
+    const isHovered = hoveredCard === lead.id && !draggedLead
+
+    return (
+        <motion.div
+            layoutId={lead.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            draggable
+            onDragStart={(e) => handleDragStart(e, lead)}
+            onClick={() => setSelectedLead(lead)}
+            onMouseEnter={() => !draggedLead && setHoveredCard(lead.id)}
+            onMouseLeave={() => setHoveredCard(null)}
+            className={`group relative bg-white dark:bg-[#161b22] border rounded-lg p-4 cursor-grab active:cursor-grabbing transition-all hover:shadow-lg dark:hover:shadow-emerald-500/5 ${isDragging ? 'opacity-50 border-emerald-500 border-dashed bg-emerald-50 dark:bg-emerald-900/10' : 'border-gray-200 dark:border-[#30363d] hover:border-emerald-500/50 dark:hover:border-emerald-400/50'
+                }`}
+        >
+            <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                        {lead.nome?.charAt(0)?.toUpperCase() || '?'}
+                    </div>
+                    <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                            {lead.nome}
+                        </h4>
+                        {lead.empresa && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                                <Building2 size={10} />
+                                {lead.empresa}
+                            </p>
+                        )}
+                    </div>
+                </div>
+                <button
+                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded"
+                    onClick={e => { e.stopPropagation(); setSelectedLead(lead) }}
+                >
+                    <MoreHorizontal size={14} className="text-gray-400" />
+                </button>
+            </div>
+
+            <div className="space-y-2 text-xs">
+                {lead.tipo_servico && (
+                    <div className="inline-block px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full">
+                        {lead.tipo_servico}
+                    </div>
+                )}
+
+                {lead.orcamento && (
+                    <p className="text-gray-600 dark:text-gray-400 flex items-center gap-1 font-medium">
+                        <DollarSign size={12} />
+                        {lead.orcamento}
+                    </p>
+                )}
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#30363d] flex items-center justify-between text-xs text-gray-400">
+                <span>{format(new Date(lead.created_at), "dd MMM", { locale: ptBR })}</span>
+                {(lead.whatsapp || lead.email) && (
+                    <div className="flex gap-1">
+                        {lead.whatsapp && <Phone size={10} className="text-green-500" />}
+                        {lead.email && <Mail size={10} className="text-blue-500" />}
+                    </div>
+                )}
+            </div>
+
+            {/* Quick Actions on Hover */}
+            <AnimatePresence>
+                {isHovered && <QuickActions lead={lead} setSelectedLead={setSelectedLead} />}
+            </AnimatePresence>
+        </motion.div>
+    )
+}
+
 export default function Pipeline() {
     const [leads, setLeads] = useState([])
     const [loading, setLoading] = useState(true)
@@ -99,128 +222,6 @@ export default function Pipeline() {
         }, 0)
     }
 
-    // Quick Actions Component
-    const QuickActions = ({ lead }) => (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full z-20"
-            onClick={e => e.stopPropagation()}
-        >
-            <div className="flex items-center gap-1 bg-white dark:bg-[#21262d] border border-gray-200 dark:border-[#30363d] rounded-full p-1 shadow-xl">
-                {lead.whatsapp && (
-                    <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        href={`https://wa.me/55${lead.whatsapp.replace(/\D/g, '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors"
-                        title="WhatsApp"
-                    >
-                        <MessageCircle size={14} />
-                    </motion.a>
-                )}
-                {lead.email && (
-                    <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        href={`mailto:${lead.email}`}
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
-                        title="Email"
-                    >
-                        <Mail size={14} />
-                    </motion.a>
-                )}
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedLead(lead)}
-                    className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-500 hover:bg-gray-600 text-white transition-colors"
-                    title="Ver detalhes"
-                >
-                    <ExternalLink size={14} />
-                </motion.button>
-            </div>
-        </motion.div>
-    )
-
-    const LeadCard = ({ lead }) => {
-        const isDragging = draggedLead?.id === lead.id
-        const isHovered = hoveredCard === lead.id && !draggedLead
-
-        return (
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                draggable
-                onDragStart={(e) => handleDragStart(e, lead)}
-                onClick={() => setSelectedLead(lead)}
-                onMouseEnter={() => !draggedLead && setHoveredCard(lead.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`group relative bg-white dark:bg-[#161b22] border rounded-lg p-4 cursor-grab active:cursor-grabbing transition-all hover:shadow-lg dark:hover:shadow-emerald-500/5 ${isDragging ? 'opacity-50 border-emerald-500 border-dashed bg-emerald-50 dark:bg-emerald-900/10' : 'border-gray-200 dark:border-[#30363d] hover:border-emerald-500/50 dark:hover:border-emerald-400/50'
-                    }`}
-            >
-                <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                            {lead.nome?.charAt(0)?.toUpperCase() || '?'}
-                        </div>
-                        <div>
-                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
-                                {lead.nome}
-                            </h4>
-                            {lead.empresa && (
-                                <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                                    <Building2 size={10} />
-                                    {lead.empresa}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                    <button
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded"
-                        onClick={e => { e.stopPropagation(); setSelectedLead(lead) }}
-                    >
-                        <MoreHorizontal size={14} className="text-gray-400" />
-                    </button>
-                </div>
-
-                <div className="space-y-2 text-xs">
-                    {lead.tipo_servico && (
-                        <div className="inline-block px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full">
-                            {lead.tipo_servico}
-                        </div>
-                    )}
-
-                    {lead.orcamento && (
-                        <p className="text-gray-600 dark:text-gray-400 flex items-center gap-1 font-medium">
-                            <DollarSign size={12} />
-                            {lead.orcamento}
-                        </p>
-                    )}
-                </div>
-
-                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#30363d] flex items-center justify-between text-xs text-gray-400">
-                    <span>{format(new Date(lead.created_at), "dd MMM", { locale: ptBR })}</span>
-                    {(lead.whatsapp || lead.email) && (
-                        <div className="flex gap-1">
-                            {lead.whatsapp && <Phone size={10} className="text-green-500" />}
-                            {lead.email && <Mail size={10} className="text-blue-500" />}
-                        </div>
-                    )}
-                </div>
-
-                {/* Quick Actions on Hover */}
-                <AnimatePresence>
-                    {isHovered && <QuickActions lead={lead} />}
-                </AnimatePresence>
-            </motion.div>
-        )
-    }
-
     if (loading) {
         return (
             <div className="h-full">
@@ -286,7 +287,15 @@ export default function Pipeline() {
                             <div className="p-3 space-y-3 min-h-[400px]">
                                 <AnimatePresence>
                                     {columnLeads.map(lead => (
-                                        <LeadCard key={lead.id} lead={lead} />
+                                        <LeadCard
+                                            key={lead.id}
+                                            lead={lead}
+                                            draggedLead={draggedLead}
+                                            hoveredCard={hoveredCard}
+                                            setHoveredCard={setHoveredCard}
+                                            handleDragStart={handleDragStart}
+                                            setSelectedLead={setSelectedLead}
+                                        />
                                     ))}
                                 </AnimatePresence>
 
