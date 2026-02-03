@@ -146,75 +146,80 @@ export default function Pipeline() {
         </motion.div>
     )
 
-    const LeadCard = ({ lead }) => (
-        <motion.div
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            draggable
-            onDragStart={(e) => handleDragStart(e, lead)}
-            onClick={() => setSelectedLead(lead)}
-            onMouseEnter={() => setHoveredCard(lead.id)}
-            onMouseLeave={() => setHoveredCard(null)}
-            className="group relative bg-white dark:bg-[#161b22] border border-gray-200 dark:border-[#30363d] rounded-lg p-4 cursor-grab active:cursor-grabbing hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all hover:shadow-lg dark:hover:shadow-emerald-500/5"
-        >
-            <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                        {lead.nome?.charAt(0)?.toUpperCase() || '?'}
+    const LeadCard = ({ lead }) => {
+        const isDragging = draggedLead?.id === lead.id
+        const isHovered = hoveredCard === lead.id && !draggedLead
+
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                draggable
+                onDragStart={(e) => handleDragStart(e, lead)}
+                onClick={() => setSelectedLead(lead)}
+                onMouseEnter={() => !draggedLead && setHoveredCard(lead.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className={`group relative bg-white dark:bg-[#161b22] border rounded-lg p-4 cursor-grab active:cursor-grabbing transition-all hover:shadow-lg dark:hover:shadow-emerald-500/5 ${isDragging ? 'opacity-50 border-emerald-500 border-dashed bg-emerald-50 dark:bg-emerald-900/10' : 'border-gray-200 dark:border-[#30363d] hover:border-emerald-500/50 dark:hover:border-emerald-400/50'
+                    }`}
+            >
+                <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                            {lead.nome?.charAt(0)?.toUpperCase() || '?'}
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                                {lead.nome}
+                            </h4>
+                            {lead.empresa && (
+                                <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                                    <Building2 size={10} />
+                                    {lead.empresa}
+                                </p>
+                            )}
+                        </div>
                     </div>
-                    <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
-                            {lead.nome}
-                        </h4>
-                        {lead.empresa && (
-                            <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                                <Building2 size={10} />
-                                {lead.empresa}
-                            </p>
-                        )}
-                    </div>
+                    <button
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded"
+                        onClick={e => { e.stopPropagation(); setSelectedLead(lead) }}
+                    >
+                        <MoreHorizontal size={14} className="text-gray-400" />
+                    </button>
                 </div>
-                <button
-                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded"
-                    onClick={e => { e.stopPropagation(); setSelectedLead(lead) }}
-                >
-                    <MoreHorizontal size={14} className="text-gray-400" />
-                </button>
-            </div>
 
-            <div className="space-y-2 text-xs">
-                {lead.tipo_servico && (
-                    <div className="inline-block px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full">
-                        {lead.tipo_servico}
-                    </div>
-                )}
+                <div className="space-y-2 text-xs">
+                    {lead.tipo_servico && (
+                        <div className="inline-block px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full">
+                            {lead.tipo_servico}
+                        </div>
+                    )}
 
-                {lead.orcamento && (
-                    <p className="text-gray-600 dark:text-gray-400 flex items-center gap-1 font-medium">
-                        <DollarSign size={12} />
-                        {lead.orcamento}
-                    </p>
-                )}
-            </div>
+                    {lead.orcamento && (
+                        <p className="text-gray-600 dark:text-gray-400 flex items-center gap-1 font-medium">
+                            <DollarSign size={12} />
+                            {lead.orcamento}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#30363d] flex items-center justify-between text-xs text-gray-400">
-                <span>{format(new Date(lead.created_at), "dd MMM", { locale: ptBR })}</span>
-                {(lead.whatsapp || lead.email) && (
-                    <div className="flex gap-1">
-                        {lead.whatsapp && <Phone size={10} className="text-green-500" />}
-                        {lead.email && <Mail size={10} className="text-blue-500" />}
-                    </div>
-                )}
-            </div>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#30363d] flex items-center justify-between text-xs text-gray-400">
+                    <span>{format(new Date(lead.created_at), "dd MMM", { locale: ptBR })}</span>
+                    {(lead.whatsapp || lead.email) && (
+                        <div className="flex gap-1">
+                            {lead.whatsapp && <Phone size={10} className="text-green-500" />}
+                            {lead.email && <Mail size={10} className="text-blue-500" />}
+                        </div>
+                    )}
+                </div>
 
-            {/* Quick Actions on Hover */}
-            <AnimatePresence>
-                {hoveredCard === lead.id && <QuickActions lead={lead} />}
-            </AnimatePresence>
-        </motion.div>
-    )
+                {/* Quick Actions on Hover */}
+                <AnimatePresence>
+                    {isHovered && <QuickActions lead={lead} />}
+                </AnimatePresence>
+            </motion.div>
+        )
+    }
 
     if (loading) {
         return (
