@@ -16,6 +16,14 @@ import Leads from './pages/crm/Leads'
 import Visitors from './pages/crm/Visitors'
 import Settings from './pages/crm/Settings'
 import Pipeline from './pages/crm/Pipeline'
+import Atendimentos from './pages/crm/Atendimentos'
+import Agents from './pages/crm/Agents'
+import AgentTeam from './pages/crm/AgentTeam'
+import Channels from './pages/crm/Channels'
+import Campaigns from './pages/crm/Campaigns'
+import Team from './pages/crm/Team'
+import StoragePage from './pages/crm/StoragePage'
+import Squads from './pages/crm/Squads'
 
 export default function App() {
   return (
@@ -30,7 +38,6 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
 
-
           {/* Protected CRM Routes */}
           <Route
             path="/crm"
@@ -41,10 +48,18 @@ export default function App() {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path="pipeline" element={<Pipeline />} />
+            <Route path="atendimentos" element={<Atendimentos />} />
+            <Route path="canais" element={<Channels />} />
+            <Route path="agentes" element={<Agents />} />
+            <Route path="time" element={<AgentTeam />} />
+            <Route path="disparos" element={<Campaigns />} />
+            <Route path="atendentes" element={<Team />} />
+            <Route path="storage" element={<StoragePage />} />
             <Route path="leads" element={<Leads />} />
+            <Route path="pipeline" element={<Pipeline />} />
             <Route path="visitors" element={<Visitors />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="squads" element={<Squads />} />
           </Route>
         </Routes>
         <LGPDBanner />

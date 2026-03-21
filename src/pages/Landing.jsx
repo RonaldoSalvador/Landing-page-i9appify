@@ -474,7 +474,7 @@ export default function Landing() {
           {/* HERO SECTION */}
           <main className="relative pt-32 pb-20 px-6 max-w-7xl mx-auto z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8 order-2 lg:order-1 relative">
+              <div className="space-y-8 relative">
                 <div className="absolute inset-0 bg-black/40 blur-3xl -z-10 rounded-full opacity-50"></div>
                 <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
                   <h1 className="text-4xl md:text-7xl font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-500 drop-shadow-lg">
@@ -495,7 +495,7 @@ export default function Landing() {
                   <div><p className="text-2xl md:text-3xl font-bold text-purple-400">+60%</p><p className="text-xs text-gray-500 uppercase">Eficiência</p></div>
                 </div>
               </div>
-              <div className="relative min-h-[600px] lg:h-[600px] h-auto flex items-center justify-center perspective-1000 order-1 lg:order-2 py-12 lg:py-0">
+              <div className="relative min-h-[600px] lg:h-[600px] h-auto flex items-center justify-center perspective-1000 py-12 lg:py-0">
                 <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 transform md:rotate-y-[-5deg] md:rotate-x-[5deg] z-20">
                   <div className="flex flex-col gap-6 mt-12">
                     <AntigravityCard icon={Bot} title="Automação com IA" subtitle="Atendimento 24/7 no WhatsApp com inteligência artificial que aprende e converte." color="cyan-400" delay={0.1} onClick={() => window.location.href = '/form/automacao'} />

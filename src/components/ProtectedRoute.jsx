@@ -12,9 +12,12 @@ export default function ProtectedRoute({ children }) {
         )
     }
 
+    // Bypass temporário solicitado pelo usuário
+    /*
     if (!user) {
         return <Navigate to="/login" replace />
     }
+    */
 
     return children
 }

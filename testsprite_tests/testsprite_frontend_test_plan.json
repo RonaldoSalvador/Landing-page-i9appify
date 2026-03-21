@@ -1,0 +1,2246 @@
+[
+  {
+    "id": "TC001",
+    "title": "Login bem-sucedido redireciona para o Dashboard do CRM",
+    "description": "Verifica que o usuário consegue autenticar com email e senha válidos e é redirecionado para /crm com o Dashboard visível.",
+    "category": "Login Flow",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Entrar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Dashboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Login com credenciais inválidas exibe erro no formulário",
+    "description": "Verifica que ao tentar logar com credenciais inválidas o sistema não redireciona e exibe mensagem de erro visível no formulário.",
+    "category": "Login Flow",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"invalid_user@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"wrong_password_123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"inválid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Validação de campos: tentar entrar com email e senha vazios",
+    "description": "Verifica que o formulário impede login quando os campos estão vazios e mostra feedback visível ao usuário.",
+    "category": "Login Flow",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"obrigat\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Validação de email: formato inválido não permite prosseguir",
+    "description": "Verifica que um email em formato inválido gera mensagem de validação visível e evita o redirecionamento para /crm.",
+    "category": "Login Flow",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"email-invalido\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"qualquer_senha\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invál\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Senha incorreta para usuário existente exibe erro de autenticação",
+    "description": "Verifica que um usuário válido com senha incorreta recebe erro visível e permanece na página inicial.",
+    "category": "Login Flow",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"wrong_password_!@#\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"inválid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Tecla Enter no campo de senha submete o login",
+    "description": "Verifica que pressionar Enter no campo de senha realiza a submissão e, com credenciais válidas, redireciona para /crm.",
+    "category": "Login Flow",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Press Enter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Dashboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Falha de login não deve exibir conteúdo do CRM",
+    "description": "Verifica que após erro de login o usuário não vê conteúdo do CRM e permanece na Landing.",
+    "category": "Login Flow",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"invalid_user@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"wrong_password_123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"CRM\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Acessar o CRM Dashboard e ver métricas e leads recentes carregados",
+    "description": "Garante que o dashboard do CRM carrega e exibe métricas e a lista de leads recentes.",
+    "category": "CRM Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Métricas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leads recentes\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"lista de leads recentes\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Abrir detalhes de um lead a partir dos leads recentes",
+    "description": "Garante que é possível clicar em um lead recente no dashboard para abrir seus detalhes.",
+    "category": "CRM Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the first lead in \"Leads recentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Detalhes do lead\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"informações do lead\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Verificar que as métricas do Dashboard são exibidas como blocos/cartões",
+    "description": "Garante que as métricas principais aparecem visualmente em blocos no dashboard.",
+    "category": "CRM Dashboard",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"bloco de métricas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"valor numérico de uma métrica\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Dashboard: estado de carregamento antes dos leads aparecerem",
+    "description": "Garante que existe um estado visual de carregamento enquanto os leads recentes estão sendo buscados.",
+    "category": "CRM Dashboard",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"carregando leads\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"lista de leads recentes\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Enviar mensagem em uma conversa e ver a mensagem aparecer no histórico local",
+    "description": "Verifica que o usuário consegue abrir uma conversa, enviar uma mensagem e ver a mensagem adicionada na conversa localmente.",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendimentos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the first conversation in the conversations list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"messages area\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem de teste - envio local\" into the message input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Send\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem de teste - envio local\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Indicador de sincronização pendente ao enviar mensagem (limitação de tempo real)",
+    "description": "Verifica que ao enviar mensagem, a UI mostra que a mensagem foi enviada localmente e exibe algum sinal de sincronização/atualização pendente quando não há atualização em tempo real.",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendimentos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the first conversation in the conversations list"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem de teste - pendente sync\" into the message input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Send\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem de teste - pendente sync\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"sincron\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Estado vazio/nenhuma conversa disponível no painel de atendimentos",
+    "description": "Verifica que a página de atendimentos lida com ausência de conversas mostrando um estado informativo, sem quebrar a UI.",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendimentos\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"conversations list\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Nenhuma\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Tentar enviar mensagem vazia não deve adicionar mensagem ao histórico",
+    "description": "Verifica que o sistema bloqueia envio de mensagem em branco e não adiciona uma nova mensagem no histórico visível.",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first conversation in the conversations list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"message input field\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Send\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"obrigat\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Persistência visual ao trocar de conversa após enviar mensagem",
+    "description": "Verifica que após enviar uma mensagem em uma conversa, ao alternar para outra e voltar, a mensagem enviada continua visível localmente.",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first conversation in the conversations list"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem para verificar persistência\" into the message input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Send\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem para verificar persistência\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the second conversation in the conversations list"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first conversation in the conversations list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem para verificar persistência\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Carregamento inicial do chat mostra componentes principais (lista e área de mensagens)",
+    "description": "Verifica que ao abrir Atendimentos, os elementos essenciais do chat aparecem (lista de conversas e painel de mensagens).",
+    "category": "Atendimentos (Chat em tempo real)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /crm/atendimentos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendimentos\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"conversations list\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"messages area\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"message input field\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Criar novo canal WhatsApp (Evolution API) com credenciais válidas",
+    "description": "Garante que o usuário consegue adicionar um canal Evolution API e vê-lo listado após salvar.",
+    "category": "Gestão de Canais",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Salvar canal Evolution API e ver confirmação de criação",
+    "description": "Garante que ao salvar um canal Evolution API válido o sistema confirma a criação com feedback visível.",
+    "category": "Gestão de Canais",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Select \"Evolution API\" from dropdown \"Tipo de Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Tentar adicionar canal com credenciais incompletas e ver erro de validação",
+    "description": "Garante que o sistema bloqueia o salvamento e exibe mensagem de erro quando campos obrigatórios não são preenchidos.",
+    "category": "Gestão de Canais",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"erro\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Tentar adicionar canal com credenciais inválidas e ver mensagem de falha ao salvar",
+    "description": "Garante que o sistema exibe um erro visível quando o servidor rejeita a criação do canal por dados inválidos.",
+    "category": "Gestão de Canais",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"invalid_value\" into the field \"API Key\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Não foi possível\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Erro de validação destaca campos obrigatórios ao tentar salvar vazio",
+    "description": "Garante que, ao falhar validação, os campos obrigatórios são indicados visualmente para o usuário.",
+    "category": "Gestão de Canais",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Campo obrigatório\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Cancelar adição de canal sem salvar e retornar para listagem",
+    "description": "Garante que o usuário consegue sair do formulário de adicionar canal sem persistir alterações.",
+    "category": "Gestão de Canais",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar Canal\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Cancelar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/canais\""
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Editar prompt de um agente IA e salvar com sucesso",
+    "description": "Garante que o usuário consegue abrir a configuração de um agente, alterar o prompt e salvar vendo a atualização refletida na tela.",
+    "category": "Gestão de Agentes IA",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"CRM\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Grid de agentes\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"Instruções atualizadas para o agente - teste e2e\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Salvo\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Cancelar edição do prompt e garantir que não há alteração aplicada",
+    "description": "Garante que fechar/cancelar o modal não persiste mudanças no prompt do agente.",
+    "category": "Gestão de Agentes IA",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"Texto temporário que não deve ser salvo\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Cancelar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Validação: tentar salvar prompt vazio deve exibir erro",
+    "description": "Garante que o sistema impede salvar um agente com prompt vazio e mostra mensagem de validação.",
+    "category": "Gestão de Agentes IA",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Campo obrigatório\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Validação: após erro de prompt vazio, sugestão de restaurar/preencher aparece",
+    "description": "Garante que, ao tentar salvar com prompt vazio, o usuário vê orientação para restaurar ou preencher o prompt.",
+    "category": "Gestão de Agentes IA",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Restaurar\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "Restaurar prompt após apagá-lo e salvar com sucesso",
+    "description": "Garante que a opção de restaurar permite recuperar o prompt e concluir o salvamento.",
+    "category": "Gestão de Agentes IA",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Restaurar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Salvo\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "Abrir configuração de diferentes agentes e validar que o modal atualiza o conteúdo",
+    "description": "Garante que ao abrir o modal de agentes diferentes, o conteúdo exibido corresponde ao agente selecionado.",
+    "category": "Gestão de Agentes IA",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Modal de configuração do agente\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Nome do agente\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Fechar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the second agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Nome do agente\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Persistência: após salvar, reabrir modal e confirmar prompt atualizado",
+    "description": "Garante que o prompt salvo permanece ao reabrir a configuração do mesmo agente.",
+    "category": "Gestão de Agentes IA",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"CRM\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Agentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/agentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Prompt\" with \"Prompt persistente - verificação\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Salvo\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Fechar\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Configurar\" for the first agent in the grid"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Prompt persistente - verificação\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "Acessar Time de Agentes e visualizar a visão de time (mapa e relações)",
+    "description": "Verifica que a página de Time de Agentes carrega e exibe a visualização de mapa/relações entre agentes.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/time\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Time\" or \"Time de Agentes\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC032",
+    "title": "Selecionar um agente no mapa para abrir detalhes",
+    "description": "Verifica que ao selecionar um agente, a UI exibe a área de detalhes do agente.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/time\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible agent item/node/card in the team view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Detalhes\" or \"Detalhes do agente\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC033",
+    "title": "Ver detalhes e histórico do agente selecionado",
+    "description": "Verifica que a seção de histórico do agente fica visível ao abrir detalhes do agente.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible agent item/node/card in the team view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Histórico\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"agent history list/timeline\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC034",
+    "title": "Confirmar que a orquestração/relações são exibidas após selecionar agente",
+    "description": "Verifica que a UI evidencia relações (ex.: clones/papéis) e que a orquestração está presente na tela.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/time\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Orquestração\" or \"Relações\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"agent relationship map/graph\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC035",
+    "title": "Tentar criar ligação inválida entre agentes e validar recusa com mensagem de conflito",
+    "description": "Verifica que o sistema impede uma ligação inválida e exibe uma mensagem de conflito de configuração.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/time\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Criar ligação\"/\"Adicionar relação\" button (if visible)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Conflito\" or \"Configuração inválida\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC036",
+    "title": "Validar que a operação inválida não altera o mapa após mensagem de conflito",
+    "description": "Verifica que, após a tentativa inválida, a UI permanece estável e não mostra confirmação de sucesso.",
+    "category": "Time de Agentes (Agent Team)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Time\" or \"Time de Agentes\" option in the main navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Criar ligação\"/\"Adicionar relação\" button (if visible)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Conflito\" or \"Configuração inválida\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Sucesso\" or \"Ligação criada\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC037",
+    "title": "Criar e enviar uma nova campanha com público, mensagem e canal preenchidos",
+    "description": "Garante que o usuário consegue criar uma campanha em massa e ver a campanha criada com status inicial de envio.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Público de teste\" into the \"Público\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem de teste da campanha\" into the \"Mensagem\" field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"WhatsApp\" from the \"Canal\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Campanha\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC038",
+    "title": "Validação: impedir envio quando o público está vazio",
+    "description": "Garante que o envio não ocorre e uma mensagem de validação é exibida quando o público não é preenchido.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem sem público\" into the \"Mensagem\" field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"WhatsApp\" from the \"Canal\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Público\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC039",
+    "title": "Cancelar criação de campanha antes de enviar",
+    "description": "Garante que o usuário consegue sair do fluxo de criação sem criar uma campanha.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Cancelar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Criar Nova Campanha\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC040",
+    "title": "Validação: impedir envio quando a mensagem está vazia",
+    "description": "Garante que o envio não ocorre e uma mensagem de validação é exibida quando a mensagem não é preenchida.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Público sem mensagem\" into the \"Público\" field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"WhatsApp\" from the \"Canal\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC041",
+    "title": "Validação: impedir envio quando o canal não está selecionado",
+    "description": "Garante que o envio não ocorre e uma mensagem de validação é exibida quando o canal não é escolhido.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Público sem canal\" into the \"Público\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem sem canal\" into the \"Mensagem\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Canal\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC042",
+    "title": "Verificar que a campanha recém-criada aparece na lista de campanhas",
+    "description": "Garante que após enviar, a lista exibe a campanha com o nome/identificação e status inicial.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Público lista\" into the \"Público\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem para aparecer na lista\" into the \"Mensagem\" field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"WhatsApp\" from the \"Canal\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Mensagem para aparecer na lista\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC043",
+    "title": "Validação: corrigir público após erro e conseguir enviar",
+    "description": "Garante que após uma falha de validação por público vazio, preencher o público permite o envio.",
+    "category": "Disparos em Massa (Campaigns)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /crm/disparos"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/disparos\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Criar Nova Campanha\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Mensagem com correção\" into the \"Mensagem\" field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"WhatsApp\" from the \"Canal\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Público\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Público corrigido\" into the \"Público\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Enviar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Campanha\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC044",
+    "title": "Adicionar atendente humano com sucesso e ver membro listado",
+    "description": "Verifica que é possível adicionar um novo usuário humano e que ele aparece na lista de atendentes.",
+    "category": "Atendentes Humanos (Team)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Adicionar\" or \"Adicionar usuário humano\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar usuário humano\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Salvar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Teste Atendente\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"teste.atendente+e2e1@exemplo.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"teste.atendente+e2e1@exemplo.com\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC045",
+    "title": "Validar obrigatoriedade: tentar salvar novo atendente sem e-mail",
+    "description": "Verifica validação de formulário ao tentar salvar um usuário humano sem preencher o e-mail.",
+    "category": "Atendentes Humanos (Team)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar usuário humano\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Sem Email\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"E-mail\" and \"obrigat\" (or \"required\") is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC046",
+    "title": "Validar obrigatoriedade: tentar salvar novo atendente sem nome",
+    "description": "Verifica validação de formulário ao tentar salvar um usuário humano sem preencher o nome.",
+    "category": "Atendentes Humanos (Team)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar usuário humano\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"teste.atendente+e2e2@exemplo.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Nome\" and \"obrigat\" (or \"required\") is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC047",
+    "title": "Cancelar inclusão de atendente e garantir que nada foi adicionado",
+    "description": "Verifica que ao cancelar/fechar o formulário de novo atendente, o usuário não é criado nem aparece na listagem.",
+    "category": "Atendentes Humanos (Team)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar usuário humano\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Cancelar Teste\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"teste.atendente+cancelar@exemplo.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Cancelar\" or \"Fechar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"teste.atendente+cancelar@exemplo.com\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC048",
+    "title": "Persistência na listagem: após adicionar, recarregar acessando o menu e ver o membro presente",
+    "description": "Verifica que um atendente criado continua aparecendo ao voltar para a tela de atendentes via navegação do app.",
+    "category": "Atendentes Humanos (Team)",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email/username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Entrar\"/\"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Adicionar usuário humano\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Persistente\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"teste.atendente+persistente@exemplo.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Salvar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"teste.atendente+persistente@exemplo.com\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Dashboard\" (or \"Início\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Atendentes\" (or \"Atendentes Humanos\") menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/atendentes\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"teste.atendente+persistente@exemplo.com\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC049",
+    "title": "Acessar Storage e visualizar a página de gerenciamento de mídia",
+    "description": "Verifica que um usuário autenticado consegue acessar a página Storage e ver elementos básicos da tela.",
+    "category": "Storage (Gerenciamento de Mídia)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Email\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into \"Email\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into \"Password\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Storage\" (or \"Mídia\") in the CRM navigation menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/storage\""
+      }
+    ]
+  },
+  {
+    "id": "TC050",
+    "title": "Pré-visualização de mídia a partir da listagem",
+    "description": "Verifica que ao selecionar um item listado, a aplicação mostra uma pré-visualização visível (quando aplicável).",
+    "category": "Storage (Gerenciamento de Mídia)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into \"Email\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into \"Password\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Storage\" (or \"Mídia\") in the CRM navigation menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/storage\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the first media item in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Preview\" (or \"Pré-visualização\") is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC051",
+    "title": "Verificar que a listagem de mídias é exibida e contém cabeçalho/estado vazio apropriado",
+    "description": "Verifica que a página apresenta uma listagem (ou estado vazio) e textos orientativos para o usuário.",
+    "category": "Storage (Gerenciamento de Mídia)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into \"Email\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into \"Password\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Storage\" (or \"Mídia\") in the CRM navigation menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/storage\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Upload\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Media list\" (or \"Arquivos\" / \"Mídias\") is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC052",
+    "title": "Reabrir Storage após navegação pelo CRM mantendo acesso autenticado",
+    "description": "Verifica que o usuário consegue ir para outra área do CRM e voltar ao Storage sem perder a sessão.",
+    "category": "Storage (Gerenciamento de Mídia)",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into \"Email\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into \"Password\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Entrar\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Canais\" in the CRM navigation menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/canais\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Storage\" (or \"Mídia\") in the CRM navigation menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/crm/storage\""
+      }
+    ]
+  }
+]

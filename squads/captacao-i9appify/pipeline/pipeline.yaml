@@ -1,0 +1,83 @@
+name: "Pipeline — Captação I9Appify"
+version: "1.0.0"
+created: "2026-03-19"
+squad: "captacao-i9appify"
+
+description: >
+  Pipeline de prospecção ativa para I9Appify. Busca leads via Apollo,
+  qualifica pelo ICP, gera abordagem personalizada e salva no Supabase
+  para aprovação. Só dispara no WhatsApp após aprovação manual.
+
+mode: "alta-performance"
+
+steps:
+  - id: step-01
+    name: "Definir Busca"
+    type: checkpoint
+    file: steps/step-01-definir-busca.md
+
+  - id: step-02
+    name: "Prospectar no Apollo"
+    type: agent
+    agent: prospector
+    tasks:
+      - buscar-leads-apollo
+      - filtrar-por-icp
+    file: steps/step-02-prospectar.md
+    depends_on: step-01
+
+  - id: step-03
+    name: "Aprovar Lista de Leads"
+    type: checkpoint
+    file: steps/step-03-aprovar-lista.md
+    depends_on: step-02
+
+  - id: step-04
+    name: "Qualificar e Pontuar"
+    type: agent
+    agent: qualifier
+    tasks:
+      - qualificar-leads
+      - pontuar-icp
+      - descartar-fora-do-perfil
+    file: steps/step-04-qualificar.md
+    depends_on: step-03
+
+  - id: step-05
+    name: "Gerar Abordagens"
+    type: agent
+    agent: copywriter
+    tasks:
+      - pesquisar-empresa
+      - escrever-mensagem-whatsapp
+      - escrever-followup
+    file: steps/step-05-gerar-copy.md
+    depends_on: step-04
+
+  - id: step-06
+    name: "Aprovar Abordagens"
+    type: checkpoint
+    file: steps/step-06-aprovar-copy.md
+    depends_on: step-05
+
+  - id: step-07
+    name: "Salvar e Disparar"
+    type: agent
+    agent: dispatcher
+    tasks:
+      - salvar-supabase
+      - acionar-n8n-whatsapp
+    file: steps/step-07-disparar.md
+    depends_on: step-06
+
+checkpoints:
+  - step-01  # Ronaldo define filtros da busca
+  - step-03  # Ronaldo aprova lista bruta de leads
+  - step-06  # Ronaldo aprova mensagens antes do disparo
+
+output:
+  artifacts:
+    - output/leads-brutos.json
+    - output/leads-qualificados.json
+    - output/abordagens.md
+    - output/relatorio-disparo.md

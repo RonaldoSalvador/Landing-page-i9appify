@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "loginUser": "admin@admin.com",
+  "loginPassword": "admin123456",
+  "executionArgs": {
+    "projectName": "I9Appify_SaaS_Central",
+    "projectPath": "c:\\Users\\Ronaldin\\OneDrive\\Área de Trabalho\\Empresa I9Appify\\I9Appify_SaaS_Central",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-yEtuYxdRHZ1a7zoc4qJEtOIAF2OCRXLGl4ELqDA0ZDKXrqP9M7enrofzhdaZP3_mhPb27KYw1aFTYHzPquUrbaJzOKpUU5VIeMOAIVXm_0zq1gnsIVHUVj9P4VVEdTRm4w4"
+    }
+  },
+  "serverPort": 57816,
+  "proxy": "http://a76fc8d0-2fb9-4d91-ac75-d828e09f43c0:7DSGs4LaL421erhhW3P2BGp06HgwdLzm@tun.testsprite.com:8080"
+}

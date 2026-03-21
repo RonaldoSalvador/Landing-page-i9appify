@@ -157,9 +157,7 @@ export default function Pipeline() {
     const [hoveredCard, setHoveredCard] = useState(null)
     const toast = useToast()
 
-    useEffect(() => {
-        fetchLeads()
-    }, [])
+// We moved useEffect below fetchLeads
 
     const fetchLeads = async () => {
         const { data, error } = await supabase
@@ -172,6 +170,10 @@ export default function Pipeline() {
         }
         setLoading(false)
     }
+
+    useEffect(() => {
+        fetchLeads()
+    }, [])
 
     const handleDragStart = (e, lead) => {
         setDraggedLead(lead)

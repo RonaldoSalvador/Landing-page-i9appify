@@ -41,16 +41,7 @@ export default function Leads() {
     const [hoveredRow, setHoveredRow] = useState(null)
     const toast = useToast()
 
-    useEffect(() => {
-        fetchLeads()
-        const channel = supabase
-            .channel('leads-changes')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => {
-                fetchLeads()
-            })
-            .subscribe()
-        return () => supabase.removeChannel(channel)
-    }, [])
+// We moved useEffect below fetchLeads
 
     useEffect(() => {
         let result = leads
@@ -87,7 +78,18 @@ export default function Leads() {
         setLoading(false)
     }
 
-    const fetchNotas = async (leadId) => {
+    useEffect(() => {
+        fetchLeads()
+        const channel = supabase
+            .channel('leads-changes')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => {
+                fetchLeads()
+            })
+            .subscribe()
+        return () => supabase.removeChannel(channel)
+    }, [])
+
+    async function fetchNotas(leadId) {
         const { data } = await supabase
             .from('notas')
             .select('*')
@@ -96,7 +98,7 @@ export default function Leads() {
         setNotas(data || [])
     }
 
-    const fetchHistorico = async (leadId) => {
+    async function fetchHistorico(leadId) {
         const { data } = await supabase
             .from('atividades')
             .select('*')

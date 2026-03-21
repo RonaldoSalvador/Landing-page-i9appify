@@ -30,9 +30,7 @@ export default function Dashboard() {
     const [showNotifications, setShowNotifications] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+// We moved useEffect below fetchData
 
     const fetchData = async () => {
         try {
@@ -104,6 +102,10 @@ export default function Dashboard() {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const StatCard = ({ icon: Icon, label, value, trend, color }) => (
         <motion.div

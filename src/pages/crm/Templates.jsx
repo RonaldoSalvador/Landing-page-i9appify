@@ -18,9 +18,7 @@ export default function Templates() {
         variaveis: []
     })
 
-    useEffect(() => {
-        fetchTemplates()
-    }, [])
+// We moved useEffect below fetchTemplates
 
     const fetchTemplates = async () => {
         const { data } = await supabase
@@ -31,6 +29,10 @@ export default function Templates() {
         setTemplates(data || [])
         setLoading(false)
     }
+
+    useEffect(() => {
+        fetchTemplates()
+    }, [])
 
     const openCreateModal = () => {
         setEditingTemplate(null)

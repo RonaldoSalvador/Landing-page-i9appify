@@ -11,7 +11,15 @@ import {
     Kanban,
     Sun,
     Moon,
-    Sparkles
+    Sparkles,
+    Bot,
+    MessageSquare,
+    Wifi,
+    Send,
+    UsersRound,
+    HardDrive,
+    Cpu,
+    Building2
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
@@ -19,9 +27,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
     { path: '/crm', icon: LayoutDashboard, label: 'Dashboard', end: true },
-    { path: '/crm/pipeline', icon: Kanban, label: 'Pipeline' },
+    { path: '/crm/atendimentos', icon: MessageSquare, label: 'Bate papo' },
+    { path: '/crm/canais', icon: Wifi, label: 'Canais' },
+    { path: '/crm/agentes', icon: Bot, label: 'Agentes' },
+    { path: '/crm/time', icon: Cpu, label: 'Time de Agentes' },
+    { path: '/crm/disparos', icon: Send, label: 'Disparos' },
+    { path: '/crm/atendentes', icon: UsersRound, label: 'Atendentes' },
+    { path: '/crm/storage', icon: HardDrive, label: 'Storage' },
     { path: '/crm/leads', icon: Users, label: 'Leads' },
+    { path: '/crm/pipeline', icon: Kanban, label: 'Pipeline' },
     { path: '/crm/visitors', icon: Eye, label: 'Visitantes' },
+    { path: '/crm/squads', icon: Building2, label: 'Squads' },
     { path: '/crm/settings', icon: Settings, label: 'Configurações' }
 ]
 

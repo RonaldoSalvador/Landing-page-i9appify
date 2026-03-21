@@ -1,0 +1,102 @@
+version: "2"
+type: frontend
+tech_stack:
+  - react
+  - vite
+  - tailwindcss
+  - supabase
+  - react-router-dom
+routes:
+  - path: /
+    file: src/pages/Landing.jsx
+    auth_required: false
+    description: Landing e Login principal
+  - path: /crm
+    file: src/pages/crm/Dashboard.jsx
+    auth_required: true
+    description: Dashboard principal do CRM
+  - path: /crm/atendimentos
+    file: src/pages/crm/Atendimentos.jsx
+    auth_required: true
+    description: Chat em tempo real
+  - path: /crm/canais
+    file: src/pages/crm/Channels.jsx
+    auth_required: true
+    description: Gestão de Canais WhatsApp
+  - path: /crm/agentes
+    file: src/pages/crm/Agents.jsx
+    auth_required: true
+    description: Gestão de Agentes IA
+  - path: /crm/time
+    file: src/pages/crm/AgentTeam.jsx
+    auth_required: true
+    description: Time de Agentes
+  - path: /crm/disparos
+    file: src/pages/crm/Campaigns.jsx
+    auth_required: true
+    description: Disparos em Massa
+  - path: /crm/atendentes
+    file: src/pages/crm/Team.jsx
+    auth_required: true
+    description: Acesso e controle de Atendentes Humanos
+  - path: /crm/storage
+    file: src/pages/crm/StoragePage.jsx
+    auth_required: true
+    description: Gerenciamento de Mídia
+features:
+  - name: Login Flow
+    description: Autenticação de usuários usando Supabase
+    files:
+      - src/pages/Landing.jsx
+      - src/App.jsx
+    entry_route: /
+    user_interactions:
+      - Clicar em Entrar
+      - Preencher formulário de Login
+      - Redirecionar para Dashboard
+    api_calls:
+      - method: POST
+        endpoint: supabase.auth.signInWithPassword
+  - name: CRM Dashboard
+    description: Painel resumo com métricas
+    files:
+      - src/pages/crm/Dashboard.jsx
+    entry_route: /crm
+    user_interactions:
+      - Visualizar métricas e leads recentes
+    api_calls:
+      - method: GET
+        endpoint: supabase.from('leads')
+  - name: Gestao de Canais
+    description: Configuração de canais ZAPI e Evolution
+    files:
+      - src/pages/crm/Channels.jsx
+    entry_route: /crm/canais
+    user_interactions:
+      - Clicar em Adicionar Canal
+      - Preencher Credenciais da Evolution API
+    api_calls:
+      - method: POST
+        endpoint: supabase.from('channels')
+  - name: Gestao de Agentes
+    description: Visualização e edição de agentes AI
+    files:
+      - src/pages/crm/Agents.jsx
+    entry_route: /crm/agentes
+    user_interactions:
+      - Clicar no modal de configuração
+      - Alterar prompt do agente
+  - name: Gestao de Atendentes
+    description: Edição de membros e regras de RLS
+    files:
+      - src/pages/crm/Team.jsx
+    entry_route: /crm/atendentes
+    user_interactions:
+      - Adicionar usuário humano
+    api_calls:
+      - method: POST
+        endpoint: supabase.from('org_members')
+known_limitations:
+  - issue: Chat em tempo real pendente de listeners Supabase completos
+    location: src/pages/crm/Atendimentos.jsx
+    impact: A interface do chat pode não receber as mensagens ao vivo instantaneamente até os webhooks estarem prontos.

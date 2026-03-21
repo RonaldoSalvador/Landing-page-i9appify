@@ -1,0 +1,182 @@
+[
+  {
+    "nome": "Médico Sem Fila - Unidade São Paulo",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Médico Sem Fila - Unidade São Paulo",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(31) 3272-8200",
+    "linkedin_url": "",
+    "website": "http://www.medicosemfila.com.br/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. São Paulo, 940 - Centro, Belo Horizonte - MG, 30170-131, Brasil",
+      "avaliacao": 4.5,
+      "total_reviews": 1129
+    }
+  },
+  {
+    "nome": "Clínica Médica São Paulo - Belo Horizonte",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Clínica Médica São Paulo - Belo Horizonte",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(31) 3432-2432",
+    "linkedin_url": "",
+    "website": "http://www.clinicamedicasaopaulo.org/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. Padre José Alves, 198 - São Paulo, Belo Horizonte - MG, 31910-060, Brasil",
+      "avaliacao": 4.3,
+      "total_reviews": 253
+    }
+  },
+  {
+    "nome": "Clinica Sao Paulo",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Clinica Sao Paulo",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(31) 2126-0100",
+    "linkedin_url": "",
+    "website": "",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "Rua dos Otoni, 826 - Santa Efigênia, Belo Horizonte - MG, 30150-270, Brasil",
+      "avaliacao": 3.9,
+      "total_reviews": 14
+    }
+  },
+  {
+    "nome": "Clínica Joao Paulo",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Clínica Joao Paulo",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(31) 3224-6000",
+    "linkedin_url": "",
+    "website": "",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. Rio de Janeiro, 462 - sala 303 - Centro, Belo Horizonte - MG, 30160-040, Brasil",
+      "avaliacao": 3.4,
+      "total_reviews": 28
+    }
+  },
+  {
+    "nome": "Win Serviços Medicos e Hospitalares Ltda.",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Win Serviços Medicos e Hospitalares Ltda.",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(41) 3189-4000",
+    "linkedin_url": "",
+    "website": "https://www.instagram.com/winhospital?igsh=MW84MXNzODFzdDlqdQ==",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. Manoel Corrêa, 965 - Costeira, Paranaguá - PR, 83203-370, Brasil",
+      "avaliacao": 2.4,
+      "total_reviews": 82
+    }
+  },
+  {
+    "nome": "Clínica São Paulo",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Clínica São Paulo",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(11) 4420-8440",
+    "linkedin_url": "",
+    "website": "https://www.clinicasaopaulo.com.br/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "Av. São Paulo, 154 - Jardim Armenia, Mogi das Cruzes - SP, 08780-570, Brasil",
+      "avaliacao": 4.6,
+      "total_reviews": 2048
+    }
+  },
+  {
+    "nome": "Clínica Odontológica São Paulo (BH)",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Clínica Odontológica São Paulo (BH)",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(31) 98412-2352",
+    "linkedin_url": "",
+    "website": "",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. São Paulo - Centro, Belo Horizonte - MG, 30120-050, Brasil",
+      "avaliacao": 5,
+      "total_reviews": 8
+    }
+  },
+  {
+    "nome": "Hospital Santa Isabel",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Hospital Santa Isabel",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(11) 3245-5000",
+    "linkedin_url": "",
+    "website": "https://hospitalhsi.com.br/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "Rua Dona Veridiana, 311 - Higienópolis, São Paulo - SP, 01238-010, Brasil",
+      "avaliacao": 4.2,
+      "total_reviews": 2230
+    }
+  },
+  {
+    "nome": "Doutor SP - Centro Médico",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Doutor SP - Centro Médico",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(11) 2944-4000",
+    "linkedin_url": "",
+    "website": "http://www.drsaopaulo.com.br/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. Ken Sugaya, 35 - Itaquera, São Paulo - SP, 08210-100, Brasil",
+      "avaliacao": 4.5,
+      "total_reviews": 524
+    }
+  },
+  {
+    "nome": "Doutor SP - Centro Médico",
+    "cargo": "Proprietário / Responsável",
+    "empresa": "Doutor SP - Centro Médico",
+    "setor": "clinica",
+    "tamanho_empresa": "1-50",
+    "email": "",
+    "telefone": "(11) 2032-5600",
+    "linkedin_url": "",
+    "website": "https://drsaopaulo.com.br/",
+    "fonte": "google_maps",
+    "fonte_detalhe": "busca: clínica médica São Paulo",
+    "dados_extras": {
+      "endereco": "R. Arlindo Colaço, 162 - São Miguel Paulista, São Paulo - SP, 08010-010, Brasil",
+      "avaliacao": 4.6,
+      "total_reviews": 509
+    }
+  }
+]

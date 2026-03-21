@@ -1,0 +1,55 @@
+name: "Captação I9Appify"
+code: "captacao-i9appify"
+description: >
+  Prospecta leads qualificados para a I9Appify usando Apollo.io,
+  qualifica pelo ICP, escreve abordagem personalizada via WhatsApp
+  e salva no Supabase para aprovação antes do disparo.
+icon: "🎯"
+version: "1.0.0"
+created: "2026-03-19"
+mode: "alta-performance"
+
+company: "_opensquad/_memory/company.md"
+preferences: "_opensquad/_memory/preferences.md"
+memory: "_memory/memories.md"
+
+# ICP alvo
+target_audience: >
+  Donos, CEOs, Diretores e Gestores de PMEs brasileiras (1-50 funcionários)
+  nos setores: clínicas, advocacia, imobiliárias, cursos online, e-commerce.
+  Empresas que ainda fazem atendimento manual e precisam de automação com IA.
+
+platform: "WhatsApp"
+format: "cold-outreach"
+
+skills:
+  - apollo-lead-finder
+  - cold-email
+  - copywriting
+  - marketing-psychology
+
+agents:
+  - id: prospector
+    name: "Aldo Apollo"
+    icon: "🔭"
+    custom: agents/prospector.custom.md
+
+  - id: qualifier
+    name: "Queli Qualifica"
+    icon: "🎯"
+    custom: agents/qualifier.custom.md
+
+  - id: copywriter
+    name: "Carlos Copy"
+    icon: "✍️"
+    custom: agents/copywriter.custom.md
+
+  - id: dispatcher
+    name: "Diego Disparo"
+    icon: "📤"
+    custom: agents/dispatcher.custom.md
+
+pipeline:
+  entry: pipeline/pipeline.yaml
+
+output_dir: output/
