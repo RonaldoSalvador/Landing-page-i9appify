@@ -24,6 +24,8 @@ import Campaigns from './pages/crm/Campaigns'
 import Team from './pages/crm/Team'
 import StoragePage from './pages/crm/StoragePage'
 import Squads from './pages/crm/Squads'
+import Calendar from './pages/crm/Calendar'
+import Templates from './pages/crm/Templates'
 
 export default function App() {
   return (
@@ -60,6 +62,8 @@ export default function App() {
             <Route path="visitors" element={<Visitors />} />
             <Route path="settings" element={<Settings />} />
             <Route path="squads" element={<Squads />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="templates" element={<Templates />} />
           </Route>
         </Routes>
         <LGPDBanner />
