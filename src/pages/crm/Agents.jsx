@@ -124,32 +124,42 @@ export default function Agents() {
     setShowModal(true)
   }
 
-  const openEditModal = (agent) => {
+  const openEditModal = async (agent) => {
     setEditingAgent(agent)
-    setForm({
-      nome: agent.nome || '',
-      empresa: agent.empresa || '',
-      descricao: agent.descricao || '',
-      modelo: agent.modelo || 'gpt-4.1-mini',
-      telefone_whatsapp: agent.telefone_whatsapp || '',
-      instancia_evolution: agent.instancia_evolution || '',
-      evolution_api_url: agent.evolution_api_url || '',
-      evolution_api_key: agent.evolution_api_key || '',
-      prompt_sistema: agent.prompt_sistema || '',
-      temperatura: agent.temperatura || 0.7,
-      max_tokens: agent.max_tokens || 1024,
-      ferramentas_habilitadas: agent.ferramentas_habilitadas || ['crm_api'],
-      knowledge_base_doc_id: agent.knowledge_base_doc_id || '',
-      status: agent.status || 'ativo',
-      modo: agent.modo || 'autonomo',
-      horario_inicio: agent.horario_inicio || '08:00',
-      horario_fim: agent.horario_fim || '18:00',
-      trabalha_fim_semana: agent.trabalha_fim_semana || false,
-      google_calendar_id: agent.google_calendar_id || '',
-      gmail_enabled: agent.gmail_enabled || false
-    })
     setActiveTab('info')
     setShowModal(true)
+
+    // Fetch fresco pelo ID para garantir dados atualizados (especialmente prompt longo)
+    const { data, error } = await supabase
+      .from('agentes')
+      .select('*')
+      .eq('id', agent.id)
+      .single()
+
+    const src = (!error && data) ? data : agent
+
+    setForm({
+      nome: src.nome || '',
+      empresa: src.empresa || '',
+      descricao: src.descricao || '',
+      modelo: src.modelo || 'gpt-4.1-mini',
+      telefone_whatsapp: src.telefone_whatsapp || '',
+      instancia_evolution: src.instancia_evolution || '',
+      evolution_api_url: src.evolution_api_url || '',
+      evolution_api_key: src.evolution_api_key || '',
+      prompt_sistema: src.prompt_sistema || '',
+      temperatura: src.temperatura || 0.7,
+      max_tokens: src.max_tokens || 1024,
+      ferramentas_habilitadas: src.ferramentas_habilitadas || ['crm_api'],
+      knowledge_base_doc_id: src.knowledge_base_doc_id || '',
+      status: src.status || 'ativo',
+      modo: src.modo || 'autonomo',
+      horario_inicio: src.horario_inicio || '08:00',
+      horario_fim: src.horario_fim || '18:00',
+      trabalha_fim_semana: src.trabalha_fim_semana || false,
+      google_calendar_id: src.google_calendar_id || '',
+      gmail_enabled: src.gmail_enabled || false
+    })
   }
 
   const saveAgent = async () => {
