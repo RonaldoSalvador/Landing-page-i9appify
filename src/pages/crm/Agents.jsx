@@ -47,6 +47,13 @@ export default function Agents() {
   const [stats, setStats] = useState({})
   const [selectedAgent, setSelectedAgent] = useState(null)
   const [showDetail, setShowDetail] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [toast, setToast] = useState(null)
+
+  const showToast = (msg, type = 'success') => {
+    setToast({ msg, type })
+    setTimeout(() => setToast(null), 3000)
+  }
 
   const [form, setForm] = useState({
     nome: '',
@@ -81,7 +88,11 @@ export default function Agents() {
       .select('*')
       .order('created_at', { ascending: false })
 
-    if (!error) setAgentes(data || [])
+    if (error) {
+      showToast('Erro ao carregar agentes: ' + error.message, 'error')
+    } else {
+      setAgentes(data || [])
+    }
     setLoading(false)
   }
 
@@ -144,22 +155,43 @@ export default function Agents() {
   const saveAgent = async () => {
     if (!form.nome || !form.telefone_whatsapp) return
 
-    const payload = { ...form }
+    setSaving(true)
+    const payload = { ...form, updated_at: new Date().toISOString() }
 
+    let error
     if (editingAgent) {
-      await supabase.from('agentes').update(payload).eq('id', editingAgent.id)
+      ;({ error } = await supabase.from('agentes').update(payload).eq('id', editingAgent.id))
     } else {
-      await supabase.from('agentes').insert(payload)
+      ;({ error } = await supabase.from('agentes').insert(payload))
     }
 
-    fetchAgentes()
-    setShowModal(false)
+    setSaving(false)
+
+    if (error) {
+      showToast('Erro ao salvar: ' + error.message, 'error')
+    } else {
+      showToast(editingAgent ? 'Agente atualizado com sucesso!' : 'Agente criado com sucesso!')
+      fetchAgentes()
+      setShowModal(false)
+    }
   }
 
   const toggleStatus = async (agent) => {
     const newStatus = agent.status === 'ativo' ? 'pausado' : 'ativo'
-    await supabase.from('agentes').update({ status: newStatus }).eq('id', agent.id)
-    fetchAgentes()
+    const { error } = await supabase
+      .from('agentes')
+      .update({ status: newStatus, updated_at: new Date().toISOString() })
+      .eq('id', agent.id)
+
+    if (error) {
+      showToast('Erro ao alterar status: ' + error.message, 'error')
+    } else {
+      showToast(newStatus === 'pausado' ? 'IA Pausada' : 'IA Ativada')
+      if (selectedAgent?.id === agent.id) {
+        setSelectedAgent(prev => ({ ...prev, status: newStatus }))
+      }
+      fetchAgentes()
+    }
   }
 
   const deleteAgent = async (id) => {
@@ -182,6 +214,23 @@ export default function Agents() {
 
   return (
     <div className="space-y-6">
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed top-4 right-4 z-[100] px-5 py-3 rounded-xl shadow-lg font-medium text-sm ${
+              toast.type === 'error'
+                ? 'bg-red-500 text-white'
+                : 'bg-emerald-500 text-white'
+            }`}
+          >
+            {toast.msg}
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -756,10 +805,17 @@ export default function Agents() {
                 </button>
                 <button
                   onClick={saveAgent}
-                  disabled={!form.nome || !form.telefone_whatsapp}
-                  className="flex-1 py-3 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-xl font-medium hover:bg-emerald-500/30 transition-colors disabled:opacity-50"
+                  disabled={!form.nome || !form.telefone_whatsapp || saving}
+                  className="flex-1 py-3 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-xl font-medium hover:bg-emerald-500/30 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {editingAgent ? 'Salvar Alterações' : 'Criar Agente'}
+                  {saving ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                      Salvando...
+                    </>
+                  ) : (
+                    editingAgent ? 'Salvar Alterações' : 'Criar Agente'
+                  )}
                 </button>
               </div>
             </motion.div>
