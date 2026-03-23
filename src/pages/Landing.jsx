@@ -443,7 +443,7 @@ export default function Landing() {
                 <NavLink href="#como-funciona">Como Funciona</NavLink>
                 <NavLink href="#faq">FAQ</NavLink>
                 <NavLink href="/blog">Blog</NavLink>
-                <NeonButton primary onClick={() => window.open('https://wa.me/553199398889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>Contato</NeonButton>
+                <NeonButton primary onClick={() => window.open('https://wa.me/5531993988889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>Contato</NeonButton>
                 <NeonButton onClick={() => window.location.href = '/login'}>Entrar</NeonButton>
               </div>
               <div className="md:hidden">
@@ -463,7 +463,7 @@ export default function Landing() {
                   <a href="#faq" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-gray-300 hover:text-cyan-400 py-2 border-b border-white/5">FAQ</a>
                   <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-gray-300 hover:text-cyan-400 py-2 border-b border-white/5">Blog</a>
                   <div className="pt-4 flex flex-col gap-3">
-                    <NeonButton primary onClick={() => { setIsMobileMenuOpen(false); window.open('https://wa.me/553199398889', '_blank'); }}>Contato</NeonButton>
+                    <NeonButton primary onClick={() => { setIsMobileMenuOpen(false); window.open('https://wa.me/5531993988889', '_blank'); }}>Contato</NeonButton>
                     <NeonButton onClick={() => { setIsMobileMenuOpen(false); window.location.href = '/login'; }}>Entrar</NeonButton>
                   </div>
                 </motion.div>
@@ -485,7 +485,7 @@ export default function Landing() {
                   </p>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex flex-wrap gap-4">
-                  <NeonButton whatsapp onClick={() => window.open('https://wa.me/553199398889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>
+                  <NeonButton whatsapp onClick={() => window.open('https://wa.me/5531993988889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>
                     <WhatsAppIcon size={20} /> WhatsApp
                   </NeonButton>
                 </motion.div>
@@ -678,7 +678,7 @@ export default function Landing() {
                   Transformando negócios através da tecnologia. Automação, inteligência artificial e desenvolvimento no-code ao seu alcance.
                 </p>
                 <div className="flex justify-center">
-                  <NeonButton whatsapp onClick={() => window.open('https://wa.me/553199398889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>
+                  <NeonButton whatsapp onClick={() => window.open('https://wa.me/5531993988889?text=Tudo%20bem%3F%20Estou%20interessado%20em%20saber%20mais%20sobre%20os%20servi%C3%A7os%20que%20voce%20oferece.', '_blank')}>
                     <WhatsAppIcon size={20} /> WhatsApp
                   </NeonButton>
                 </div>
