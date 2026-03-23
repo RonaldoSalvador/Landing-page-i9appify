@@ -417,7 +417,7 @@ export default function Blog() {
                             Home
                         </Link>
                         <button
-                            onClick={() => window.open('https://wa.me/553199398889', '_blank')}
+                            onClick={() => window.open('https://wa.me/5531993988889', '_blank')}
                             className="px-5 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full font-bold text-sm hover:shadow-lg hover:shadow-cyan-500/25 transition-all"
                         >
                             Fale Conosco
@@ -453,7 +453,7 @@ export default function Blog() {
                             <div className="p-6 space-y-4">
                                 <Link to="/" className="block text-lg font-medium text-gray-300 hover:text-cyan-400">Home</Link>
                                 <button
-                                    onClick={() => window.open('https://wa.me/553199398889', '_blank')}
+                                    onClick={() => window.open('https://wa.me/5531993988889', '_blank')}
                                     className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold"
                                 >
                                     Fale Conosco
@@ -858,7 +858,7 @@ export default function Blog() {
                                     Transformamos sua ideia em realidade com IA & tecnologia.
                                 </p>
                                 <button
-                                    onClick={() => window.open('https://wa.me/553199398889', '_blank')}
+                                    onClick={() => window.open('https://wa.me/5531993988889', '_blank')}
                                     className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-green-500/25 transition-all"
                                 >
                                     💬 Falar no WhatsApp

@@ -88,7 +88,7 @@ O DeepSeek R1 marca um ponto de virada na indústria de IA. Empresas que ainda n
 
 ---
 
-**Quer saber como implementar IA no seu negócio?** [Fale com a I9 Appify](https://wa.me/553199398889)
+**Quer saber como implementar IA no seu negócio?** [Fale com a I9 Appify](https://wa.me/5531993988889)
     `
     },
     'claude-35-opus': {
@@ -130,7 +130,7 @@ Se você já usa Claude ou ChatGPT, pode esperar:
 
 ---
 
-**Quer preparar seu negócio para a próxima geração de IA?** [Fale conosco](https://wa.me/553199398889)
+**Quer preparar seu negócio para a próxima geração de IA?** [Fale conosco](https://wa.me/5531993988889)
     `
     },
     'ia-whatsapp-business': {
@@ -196,7 +196,7 @@ Empresas que implementam automação no WhatsApp reportam:
 
 ---
 
-**Quer implementar isso no seu negócio?** [Fale com a I9 Appify](https://wa.me/553199398889)
+**Quer implementar isso no seu negócio?** [Fale com a I9 Appify](https://wa.me/5531993988889)
     `
     },
     'comparativo-ias-2026': {
@@ -247,7 +247,7 @@ Não existe "a melhor IA". Depende do seu caso de uso:
 
 ---
 
-**Não sabe qual usar no seu negócio?** [A I9 Appify te ajuda a decidir](https://wa.me/553199398889)
+**Não sabe qual usar no seu negócio?** [A I9 Appify te ajuda a decidir](https://wa.me/5531993988889)
     `
     },
     'no-code-2026': {
@@ -302,7 +302,7 @@ Nem tudo são flores. Existem limitações:
 
 ---
 
-**Quer saber se No-Code resolve seu problema?** [Consulte a I9 Appify](https://wa.me/553199398889)
+**Quer saber se No-Code resolve seu problema?** [Consulte a I9 Appify](https://wa.me/5531993988889)
     `
     },
     'i9-appify-ia': {
@@ -349,7 +349,7 @@ Projetos geralmente ficam entre R$ 4.000 e R$ 10.000, dependendo da complexidade
 
 ---
 
-**Quer ser o próximo case de sucesso?** [Fale com o Ronaldo](https://wa.me/553199398889)
+**Quer ser o próximo case de sucesso?** [Fale com o Ronaldo](https://wa.me/5531993988889)
 
 ---
 
@@ -1331,7 +1331,7 @@ export default function BlogPost() {
                         <h3 className="text-2xl font-bold mb-2">Gostou do conteúdo?</h3>
                         <p className="text-gray-400 mb-6">Entre em contato e descubra como a I9 Appify pode ajudar seu negócio.</p>
                         <a
-                            href="https://wa.me/553199398889"
+                            href="https://wa.me/5531993988889"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-8 py-4 bg-green-500 text-white rounded-xl font-bold hover:bg-green-400 transition-colors"
