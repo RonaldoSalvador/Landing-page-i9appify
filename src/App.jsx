@@ -26,6 +26,8 @@ import StoragePage from './pages/crm/StoragePage'
 import Squads from './pages/crm/Squads'
 import Calendar from './pages/crm/Calendar'
 import Templates from './pages/crm/Templates'
+import N8nWorkflows from './pages/crm/N8nWorkflows'
+import Clientes from './pages/crm/Clientes'
 
 export default function App() {
   return (
@@ -64,6 +66,8 @@ export default function App() {
             <Route path="squads" element={<Squads />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="templates" element={<Templates />} />
+            <Route path="n8n" element={<N8nWorkflows />} />
+            <Route path="clientes" element={<Clientes />} />
           </Route>
         </Routes>
         <LGPDBanner />

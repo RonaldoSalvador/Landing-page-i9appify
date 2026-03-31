@@ -21,7 +21,9 @@ import {
     Cpu,
     Building2,
     CalendarDays,
-    FileText
+    FileText,
+    Workflow,
+    UserSquare2
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
@@ -39,6 +41,8 @@ const navItems = [
     { path: '/crm/leads', icon: Users, label: 'Leads' },
     { path: '/crm/pipeline', icon: Kanban, label: 'Pipeline' },
     { path: '/crm/visitors', icon: Eye, label: 'Visitantes' },
+    { path: '/crm/clientes', icon: UserSquare2, label: 'Clientes' },
+    { path: '/crm/n8n', icon: Workflow, label: 'Workflows n8n' },
     { path: '/crm/squads', icon: Building2, label: 'Squads' },
     { path: '/crm/calendar', icon: CalendarDays, label: 'Calendário' },
     { path: '/crm/templates', icon: FileText, label: 'Templates' },
