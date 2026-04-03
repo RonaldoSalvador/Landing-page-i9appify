@@ -6,6 +6,7 @@ import {
   BarChart3, Users, Eye, AlertCircle
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import * as XLSX from 'xlsx'
 
 const statusConfig = {
   draft: { label: 'Rascunho', color: 'bg-gray-500', icon: FileSpreadsheet },
@@ -35,6 +36,8 @@ export default function Campaigns() {
   })
   const [channels, setChannels] = useState([])
   const [dragOver, setDragOver] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+  const [uploadLoading, setUploadLoading] = useState(false)
 
   useEffect(() => {
     fetchCampaigns()
@@ -76,12 +79,93 @@ export default function Campaigns() {
   function handleFileUpload(e) {
     const file = e.target?.files?.[0] || e.dataTransfer?.files?.[0]
     if (!file) return
-    // TODO: Parse .xlsx file using SheetJS
-    // For now, just store the filename
-    setFormData(prev => ({
-      ...prev,
-      contacts: [{ fileName: file.name, count: 'processando...' }]
-    }))
+
+    setUploadError('')
+    setUploadLoading(true)
+
+    const isCSV = file.name.toLowerCase().endsWith('.csv')
+    const isExcel = file.name.toLowerCase().match(/\.(xlsx|xls)$/)
+
+    if (!isCSV && !isExcel) {
+      setUploadError('Formato inválido. Use .xlsx, .xls ou .csv')
+      setUploadLoading(false)
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      try {
+        const data = event.target.result
+        let workbook
+
+        if (isCSV) {
+          workbook = XLSX.read(data, { type: 'string' })
+        } else {
+          workbook = XLSX.read(data, { type: 'array' })
+        }
+
+        const sheet = workbook.Sheets[workbook.SheetNames[0]]
+        const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' })
+
+        if (rows.length === 0) {
+          setUploadError('Arquivo vazio ou sem dados.')
+          setUploadLoading(false)
+          return
+        }
+
+        const headers = Object.keys(rows[0]).map(h => h.toLowerCase().trim())
+        const hasTelefone = headers.some(h => h === 'telefone' || h === 'phone' || h === 'whatsapp')
+
+        if (!hasTelefone) {
+          setUploadError('Coluna "telefone" não encontrada. Verifique o cabeçalho da planilha.')
+          setUploadLoading(false)
+          return
+        }
+
+        // Normalize column name to "telefone"
+        const normalizedRows = rows.map(row => {
+          const normalized = {}
+          Object.keys(row).forEach(key => {
+            const lower = key.toLowerCase().trim()
+            if (lower === 'phone' || lower === 'whatsapp') {
+              normalized['telefone'] = String(row[key]).trim()
+            } else {
+              normalized[lower] = String(row[key]).trim()
+            }
+          })
+          return normalized
+        }).filter(r => r.telefone && r.telefone !== '')
+
+        if (normalizedRows.length === 0) {
+          setUploadError('Nenhum contato válido encontrado. Verifique se a coluna "telefone" tem dados.')
+          setUploadLoading(false)
+          return
+        }
+
+        if (normalizedRows.length > 10000) {
+          setUploadError(`Arquivo contém ${normalizedRows.length} contatos. Limite máximo é 10.000.`)
+          setUploadLoading(false)
+          return
+        }
+
+        setFormData(prev => ({
+          ...prev,
+          contacts: normalizedRows,
+          contactFileName: file.name,
+          contactColumns: Object.keys(normalizedRows[0]).filter(k => k !== 'telefone'),
+        }))
+        setUploadLoading(false)
+      } catch (err) {
+        setUploadError('Erro ao ler o arquivo. Verifique se está correto.')
+        setUploadLoading(false)
+      }
+    }
+
+    if (isCSV) {
+      reader.readAsText(file, 'UTF-8')
+    } else {
+      reader.readAsArrayBuffer(file)
+    }
   }
 
   return (
@@ -161,31 +245,62 @@ export default function Campaigns() {
                   onDragOver={e => { e.preventDefault(); setDragOver(true) }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={e => { e.preventDefault(); setDragOver(false); handleFileUpload(e) }}
-                  className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors ${
-                    dragOver ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/20' : 'border-gray-300 dark:border-gray-700'
+                  className={`border-2 border-dashed rounded-xl p-10 text-center transition-colors ${
+                    dragOver ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/20' :
+                    formData.contacts?.length > 0 ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/10' :
+                    'border-gray-300 dark:border-gray-700'
                   }`}
                 >
-                  <FileSpreadsheet size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400 font-medium">Arraste o arquivo ou clique para selecionar</p>
-                  <p className="text-gray-400 text-sm mt-1">Suporta .xlsx, .xls — máximo de 10.000 contatos</p>
-                  <input type="file" accept=".xlsx,.xls" onChange={handleFileUpload} className="hidden" id="file-upload" />
-                  <label htmlFor="file-upload" className="inline-block mt-3 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg cursor-pointer font-medium text-sm">
-                    Selecionar Arquivo
-                  </label>
+                  {uploadLoading ? (
+                    <div className="py-4">
+                      <Loader2 size={40} className="animate-spin mx-auto text-emerald-500 mb-2" />
+                      <p className="text-gray-500 text-sm">Lendo arquivo...</p>
+                    </div>
+                  ) : formData.contacts?.length > 0 ? (
+                    <div>
+                      <CheckCircle size={40} className="mx-auto mb-2 text-emerald-500" />
+                      <p className="text-emerald-600 dark:text-emerald-400 font-semibold text-lg">{formData.contacts.length.toLocaleString('pt-BR')} contatos carregados</p>
+                      <p className="text-gray-400 text-sm mt-1">{formData.contactFileName}</p>
+                      {formData.contactColumns?.length > 0 && (
+                        <p className="text-gray-400 text-xs mt-1">Variáveis encontradas: {formData.contactColumns.join(', ')}</p>
+                      )}
+                      <label htmlFor="file-upload" className="inline-block mt-3 px-3 py-1.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg cursor-pointer text-sm">
+                        Trocar arquivo
+                      </label>
+                    </div>
+                  ) : (
+                    <>
+                      <FileSpreadsheet size={48} className="mx-auto mb-3 text-gray-400" />
+                      <p className="text-gray-600 dark:text-gray-400 font-medium">Arraste o arquivo ou clique para selecionar</p>
+                      <p className="text-gray-400 text-sm mt-1">Suporta .xlsx, .xls, .csv — máximo de 10.000 contatos</p>
+                      <label htmlFor="file-upload" className="inline-block mt-3 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg cursor-pointer font-medium text-sm">
+                        Selecionar Arquivo
+                      </label>
+                    </>
+                  )}
+                  <input type="file" accept=".xlsx,.xls,.csv" onChange={handleFileUpload} className="hidden" id="file-upload" />
                 </div>
+
+                {/* Erro de upload */}
+                {uploadError && (
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 mt-3 flex items-start gap-2">
+                    <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" />
+                    <p className="text-sm text-red-600 dark:text-red-400">{uploadError}</p>
+                  </div>
+                )}
 
                 {/* Format info */}
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mt-4">
                   <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mb-1">ℹ️ Formato esperado da planilha:</p>
                   <p className="text-xs text-blue-600 dark:text-blue-400">A primeira linha deve ser o cabeçalho das colunas.</p>
-                  <p className="text-xs text-blue-600 dark:text-blue-400">A coluna de telefone deve se chamar exatamente <strong>telefone</strong> e conter o número com DDI (ex: 5511999999999).</p>
+                  <p className="text-xs text-blue-600 dark:text-blue-400">A coluna de telefone deve se chamar <strong>telefone</strong>, <strong>phone</strong> ou <strong>whatsapp</strong> — com DDI (ex: 5511999999999).</p>
                   <p className="text-xs text-blue-600 dark:text-blue-400">As demais colunas viram variáveis do template.</p>
                 </div>
 
                 <div className="flex justify-end mt-6">
                   <button
                     onClick={() => setStep(2)}
-                    disabled={!formData.nome}
+                    disabled={!formData.nome || formData.contacts?.length === 0}
                     className="px-6 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium disabled:opacity-50"
                   >
                     Próximo →
@@ -267,8 +382,10 @@ export default function Campaigns() {
 
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 max-w-md mx-auto text-left space-y-2">
                   <p className="text-sm"><strong>Campanha:</strong> {formData.nome}</p>
+                  <p className="text-sm"><strong>Contatos:</strong> {formData.contacts?.length?.toLocaleString('pt-BR') || 0}</p>
+                  <p className="text-sm"><strong>Arquivo:</strong> {formData.contactFileName || '—'}</p>
                   <p className="text-sm"><strong>Template:</strong> {formData.template_name}</p>
-                  <p className="text-sm"><strong>Agendamento:</strong> {formData.scheduled_at || 'Imediato'}</p>
+                  <p className="text-sm"><strong>Agendamento:</strong> {formData.scheduled_at ? new Date(formData.scheduled_at).toLocaleString('pt-BR') : 'Imediato'}</p>
                 </div>
 
                 <div className="flex justify-center gap-3 mt-6">
@@ -277,7 +394,7 @@ export default function Campaigns() {
                   </button>
                   <button
                     onClick={async () => {
-                      await supabase.from('campaigns').insert({
+                      const { data: campaign } = await supabase.from('campaigns').insert({
                         org_id: 1,
                         channel_id: formData.channel_id,
                         nome: formData.nome,
@@ -285,7 +402,24 @@ export default function Campaigns() {
                         template_language: formData.template_language,
                         status: formData.scheduled_at ? 'scheduled' : 'draft',
                         scheduled_at: formData.scheduled_at || null,
-                      })
+                        total_contatos: formData.contacts?.length || 0,
+                      }).select().single()
+
+                      // Salvar contatos da campanha se existirem
+                      if (campaign?.id && formData.contacts?.length > 0) {
+                        const contactRows = formData.contacts.map(c => ({
+                          campaign_id: campaign.id,
+                          telefone: c.telefone,
+                          nome: c.nome || c.name || '',
+                          variables: c,
+                          status: 'pending',
+                        }))
+                        // Inserir em lotes de 500
+                        for (let i = 0; i < contactRows.length; i += 500) {
+                          await supabase.from('campaign_contacts').insert(contactRows.slice(i, i + 500))
+                        }
+                      }
+
                       setShowNewCampaign(false)
                       fetchCampaigns()
                     }}
